@@ -1,0 +1,17 @@
+<article class="table">
+  <h1>{{ titre }}</h1>
+  <ul>
+    @for(task of tasks; track $index) {
+    <app-simple-task
+      #simpletask
+      [details]="task"
+      (eventEmitter)="deleteTask($event)"
+    ></app-simple-task>
+    }
+  </ul>
+  <button type="button" (click)="addTask()">
+    {{ showEdit ? "Ajouter" : "Ajouter une tache" }}
+  </button>
+  <br />
+  <input *ngIf="showEdit" type="text" [(ngModel)]="newTask" />
+</article>
