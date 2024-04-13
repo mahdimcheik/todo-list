@@ -1,7 +1,7 @@
 <article class="table">
   <h1>{{ titre }}</h1>
   <ul>
-    @for(task of tasks; track $index) { k
+    @for(task of tasks; track $index) {
     <app-simple-task [task]="task"></app-simple-task>
     }
   </ul>
