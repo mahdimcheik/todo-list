@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
-import { SimpleTaskComponent } from '../simple-task/simple-task.component';
-export type Task = { id: number; task: string };
+import { Component, inject } from '@angular/core';
+import { TaskService } from '../../services/task.service';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -8,28 +8,10 @@ export type Task = { id: number; task: string };
 })
 export class TableComponent {
   titre: string = 'Nouvelle table';
-  tasks: Task[] = [
-    { id: 1, task: 'Task 1' },
-    { id: 2, task: 'Task 2' },
-  ];
+  tasks: string[] = ['Task 1', 'Task 2'];
   newTask: string = '';
-  @ViewChild('simpletask') simpletask!: SimpleTaskComponent;
 
-  showEdit: boolean = false;
-  addTask() {
-    this.showEdit = !this.showEdit;
-    if (!this.showEdit && this.newTask.length > 0) {
-      console.log('ASdded');
-      this.tasks.push({
-        task: this.newTask,
-        id: this.tasks[this.tasks.length - 1].id + 1,
-      });
-      console.log(this.tasks);
-    }
-  }
-  deleteTask(id: number) {
-    this.simpletask.print(id);
-    console.log(id);
-    this.tasks = this.tasks.filter((ele) => ele.id != id);
-  }
+  getTask = inject(TaskService).transmitter.subscribe((val: string) => {
+    this.tasks = [...this.tasks, val];
+  });
 }

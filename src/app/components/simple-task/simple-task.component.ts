@@ -1,5 +1,12 @@
-import { Component, EventEmitter, Input, Output, Type } from '@angular/core';
-import { Task } from '../table/table.component';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  Type,
+  inject,
+} from '@angular/core';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-simple-task',
@@ -8,13 +15,11 @@ import { Task } from '../table/table.component';
 })
 export class SimpleTaskComponent {
   @Input()
-  details: Task = { id: 0, task: '' };
-  @Output()
-  eventEmitter: EventEmitter<number> = new EventEmitter();
-  delete() {
-    this.eventEmitter.emit(this.details.id);
-  }
-  print(id: number) {
-    console.log(id);
+  task = '';
+
+  lol = inject(TaskService);
+
+  onClick() {
+    this.lol.clicker.next(this.task);
   }
 }
